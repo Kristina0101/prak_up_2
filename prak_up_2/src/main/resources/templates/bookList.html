@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Books</title>
+</head>
+<body>
+<h1>Список учебников</h1>
+<form action="/subjectsPage" method="get">
+    <input type="submit" value="Страница с предметами">
+</form>
+<br>
+<form action="/students" method="get">
+    <input type="submit" value="Страница со студентами">
+</form>
+<br>
+<form action="/books/add" method="post">
+    <input type="text" name="name" placeholder="Название" required="">
+    <input type="text" name="author" placeholder="Автор" required="">
+    <input type="text" name="publishing" placeholder="Издательство" required="">
+    <input type="number" name="yearPublishing" placeholder="Год издания" required="">
+    <button type="submit">Добавить учебник</button>
+</form>
+
+<h2>Все учебники:</h2>
+<ul>
+    <th:block th:each="book : ${books}">
+        <li>
+            <span th:text="${book.name} + ' - ' + ${book.author} +
+            ' (' + ${book.publishing} + ', ' + ${book.yearPublishing} + ')'"></span>
+            <form action="/books/update" method="post" style="display:inline;">
+                <input type="hidden" name="id" th:value="${book.id}">
+                <input type="text" name="name" placeholder="Название" required="">
+                <input type="text" name="author" placeholder="Автор" required="">
+                <input type="text" name="publishing" placeholder="Издательство" required="">
+                <input type="number" name="yearPublishing" placeholder="Год издания" required="">
+                <button type="submit">Обновить</button>
+            </form>
+            <form action="/books/delete" method="post" style="display:inline;">
+                <input type="hidden" name="id" th:value="${book.id}">
+                <button type="submit">Удалить</button>
+            </form>
+        </li>
+    </th:block>
+</ul>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Список студентов</h1>
+<br>
+<span>
+    <form action="/subjectsPage" method="get">
+        <input type="submit" value="Страница с предметами">
+    </form>
+    <br>
+    <form action="/bookPage" method="get">
+        <input type="submit" value="Страница с учебниками">
+    </form>
+</span>
+
+<br>
+<form action="/students/add" method="post">
+    <input type="text" name="name" placeholder="Имя" required="">
+    <input type="text" name="lastName" placeholder="Фамилия" required="">
+    <input type="text" name="firstName" placeholder="Отчество" required="">
+    <input type="text" name="middleName" placeholder="Дополнительное имя" required="">
+    <button type="submit">Добавить студента</button>
+</form>
+
+<h2>Все студенты:</h2>
+<ul>
+    <th:block th:each="student : ${students}">
+        <li>
+            <span th:text="${student.name} + ' ' + ${student.lastName} + ' '
+            + ${student.firstName} + ' ' + ${student.middleName}"></span>
+            <form action="/students/update" method="post" style="display:inline;">
+                <input type="hidden" name="id" th:value="${student.id}">
+                <input type="text" name="name" placeholder="Имя" required="">
+                <input type="text" name="lastName" placeholder="Фамилия" required="">
+                <input type="text" name="firstName" placeholder="Отчество" required="">
+                <input type="text" name="middleName" placeholder="Дополнительное имя" required="">
+                <button type="submit">Обновить</button>
+            </form>
+            <form action="/students/delete" method="post" style="display:inline;">
+                <input type="hidden" name="id" th:value="${student.id}">
+                <button type="submit">Удалить</button>
+            </form>
+        </li>
+    </th:block>
+</ul>
+
+
+</body>
+</html>
